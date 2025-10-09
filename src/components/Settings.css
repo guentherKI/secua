@@ -1,0 +1,51 @@
+@import "./SectionContainer.css";
+
+.app-settings-scroll {
+  max-height: 78vh;
+  overflow-y: auto;
+}
+
+.settings label,
+.app-section-container label {
+  font-size: 1.13rem;
+  margin-bottom: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.settings input,
+.app-section-container input {
+  display: block;
+  width: 100%;
+  padding: 0.7rem;
+  border-radius: 7px;
+  border: 1.5px solid var(--border);
+  background: var(--sidebar);
+  color: var(--text);
+  font-size: 1.15rem;
+}
+
+.settings code,
+.app-section-container code {
+  background: #1f2940;
+  padding: 3px 9px;
+  border-radius: 4px;
+  color: #8fa7c5;
+  font-size: 1.05rem;
+}
+.settings button,
+.app-section-container button {
+  margin-top: 1.2rem;
+  padding: 0.7rem 2.3rem;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.13rem;
+  transition: background 0.15s;
+}
+.settings button:hover,
+.app-section-container button:hover {
+  background: var(--primary-hover);
+}
