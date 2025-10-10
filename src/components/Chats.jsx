@@ -14,7 +14,7 @@ export default function Chats({ profile }) {
   useEffect(() => {
     // Peer initialisieren
     const peer = new Peer(profile.id, {
-      host: "https://peerjs.com",
+      host: "peerjs.com",
       port: 443,
       path: "/",
       secure: true,
@@ -69,7 +69,7 @@ export default function Chats({ profile }) {
           <strong>Deine ID:</strong> <code>{peerId}</code>
         </div>
         <div>
-          Gib die ID deines Chatpartners ein und klicke auf <b>Verbinden</b>.
+          Gib die ID deines Chatpartners ein und klicke auf<b>Verbinden</b>.
         </div>
       </div>
       <div className="start-chat">
