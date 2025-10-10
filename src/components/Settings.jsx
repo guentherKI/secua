@@ -12,7 +12,7 @@ export default function Settings({ profile, setProfile }) {
   const handleSave = () => {
     if (!profile) return;
     setProfile({ ...profile, name });
-    alert("Profil aktualisiert!");
+    console.log("Profil aktualisiert!");
   };
 
   if (!profile) {
