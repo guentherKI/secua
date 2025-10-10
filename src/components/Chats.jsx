@@ -11,8 +11,9 @@ export default function Chats({ profile }) {
   const connRef = useRef(null);
 
   useEffect(() => {
-    // Peer initialisieren
-    const peer = new Peer
+    // Peer initialisieren mit kurzer 6-stelliger Großbuchstaben-ID
+    const shortId = Math.random().toString(36).substring(2, 8).toUpperCase();
+    const peer = new Peer(shortId, { debug: 2 });
     peerRef.current = peer;
 
     peer.on("open", (id) => {
