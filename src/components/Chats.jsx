@@ -14,7 +14,7 @@ export default function Chats({ profile }) {
   useEffect(() => {
     // Peer initialisieren
     const peer = new Peer(profile.id, {
-      host: "https://unpkg.com/peerjs@1.5.5/dist/peerjs.min.js",
+      host: "https://peerjs.com",
       port: 443,
       path: "/",
       secure: true,
