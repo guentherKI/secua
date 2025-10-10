@@ -1,13 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Settings.css";
 
 export default function Settings({ profile, setProfile }) {
-  const [name, setName] = useState(profile.name);
+  const [name, setName] = useState(profile?.name || "");
+
+  // Wenn sich das Profil ändert, Name aktualisieren
+  useEffect(() => {
+    if (profile?.name) setName(profile.name);
+  }, [profile]);
 
   const handleSave = () => {
+    if (!profile) return;
     setProfile({ ...profile, name });
     alert("Profil aktualisiert!");
   };
+
+  if (!profile) {
+    return (
+      <div className="app-section-container">
+        <h2>Einstellungen</h2>
+        <p>Lade Profil...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="app-section-container app-settings-scroll">
