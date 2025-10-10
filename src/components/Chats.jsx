@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import Peer from "peerjs";
+import Peer from "https://unpkg.com/peerjs@1.5.5/dist/peerjs.min.js";
 import "./Chats.css";
 
 export default function Chats({ profile }) {
@@ -14,7 +14,7 @@ export default function Chats({ profile }) {
   useEffect(() => {
     // Peer initialisieren
     const peer = new Peer(profile.id, {
-      host: "peerjs.com",
+      host: "https://unpkg.com/peerjs@1.5.5/dist/peerjs.min.js",
       port: 443,
       path: "/",
       secure: true,
