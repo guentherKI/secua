@@ -7,10 +7,14 @@ import Settings from "./Settings";
 export default function Dashboard({ currentPage, profile, setProfile }) {
   return (
     <>
-      {currentPage === "chats" && <Chats profile={profile} setProfile={setProfile} />}
+      {currentPage === "chats" && (
+        <Chats profile={profile} setProfile={setProfile} />
+      )}
       {currentPage === "contacts" && <Contacts />}
       {currentPage === "history" && <History />}
-      {currentPage === "settings" && <Settings />}
+      {currentPage === "settings" && (
+        <Settings profile={profile} setProfile={setProfile} />
+      )}
     </>
   );
 }
