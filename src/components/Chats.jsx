@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import Peer from "https://unpkg.com/peerjs@1.5.5/dist/peerjs.min.js";
+import Peer from "peerjs";
 import "./Chats.css";
 
 export default function Chats({ profile }) {
