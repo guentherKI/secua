@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./Chats.css";
 
-export default function Chats({ profile }) {
+export default function Chats({ profile, setProfile }) {
   const [partnerId, setPartnerId] = useState("");
   const [connected, setConnected] = useState(false);
   const [messages, setMessages] = useState([]);
@@ -11,16 +11,17 @@ export default function Chats({ profile }) {
   const connRef = useRef(null);
 
   useEffect(() => {
-    // Peer initialisieren mit kurzer 6-stelliger Großbuchstaben-ID
+    // 🔹 6-stellige Großbuchstaben-ID generieren
     const shortId = Math.random().toString(36).substring(2, 8).toUpperCase();
+
     const peer = new Peer(shortId, { debug: 2 });
     peerRef.current = peer;
 
     peer.on("open", (id) => {
       setPeerId(id);
+      setProfile((prev) => ({ ...prev, id })); // <-- ID ins Profil schreiben
     });
 
-    // Eingehende Verbindung akzeptieren
     peer.on("connection", (conn) => {
       connRef.current = conn;
       setConnected(true);
@@ -32,23 +33,19 @@ export default function Chats({ profile }) {
     return () => {
       peer.destroy();
     };
-  }, [profile.id]);
+  }, [setProfile]);
 
-  // Verbindung zu anderem Peer
   const connectToPeer = () => {
     if (!partnerId) return;
     const conn = peerRef.current.connect(partnerId);
     connRef.current = conn;
-    conn.on("open", () => {
-      setConnected(true);
-    });
+    conn.on("open", () => setConnected(true));
     conn.on("data", (data) => {
       setMessages((msgs) => [...msgs, { from: "partner", text: data }]);
     });
     setMessages([]);
   };
 
-  // Nachricht senden
   const sendMessage = () => {
     if (!input.trim() || !connRef.current) return;
     connRef.current.send(input);
