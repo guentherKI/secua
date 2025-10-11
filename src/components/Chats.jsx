@@ -52,14 +52,11 @@ export default function Chats({ profile, setProfile }) {
     };
   }, [setProfile, profile.name]);
 
-  // Automatisches Scrollen nur innerhalb des Chatbereichs
+  // Automatisches Scrollen im Chatbereich
   useEffect(() => {
     if (messagesListRef.current) {
-      // scroll erst nach dem Rendern, um Sprung der Seite zu verhindern
-      requestAnimationFrame(() => {
-        const container = messagesListRef.current;
-        container.scrollTop = container.scrollHeight;
-      });
+      const container = messagesListRef.current;
+      container.scrollTop = container.scrollHeight;
     }
   }, [messages]);
 
