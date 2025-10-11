@@ -1,52 +1,105 @@
-.app-section-container {
-  width: 800px;
+/* Container der gesamten Sektion */
+.app-section-container.chat-container {
+  width: 600px;
   max-width: 95vw;
   margin: 60px auto 0 auto;
-  background: var(--panel);
-  padding: 3rem 2.5rem 2.5rem 2.5rem;
+  background: rgba(20, 25, 35, 0.9);
+  padding: 0;
   border-radius: 18px;
   box-shadow: var(--shadow);
   color: var(--text);
-  min-height: 600px;
   display: flex;
   flex-direction: column;
   align-items: stretch;
 }
 
+/* Überschrift für neuen Chat */
 .app-section-container h2 {
-  margin-top: 0;
-  margin-bottom: 1.7rem;
-  font-size: 2.1rem;
+  margin: 1.5rem;
+  font-size: 2rem;
   font-weight: 700;
   letter-spacing: 0.01em;
-  text-align: center;
+  color: #dce4f0;
 }
 
-/* 🔹 Chatbereich */
-.messages-list {
-  flex: 1;
-  border: 2px solid rgba(255, 255, 255, 0.1);
-  background: rgba(255, 255, 255, 0.03);
-  border-radius: 14px;
-  padding: 1rem;
-  overflow-y: auto;
-  margin-bottom: 1.3rem;
-  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.25);
+/* Obere Chat-Leiste */
+.chat-top-bar {
+  display: flex;
+  align-items: center;
+  background: rgba(30, 40, 60, 0.8);
+  border: 1.5px solid rgba(120, 160, 255, 0.3);
+  border-radius: 10px 10px 0 0;
+  padding: 0.6rem 1rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Avatar + Name nebeneinander */
+.partner-info {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+/* Avatar */
+.partner-avatar {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #3b82f6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.partner-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+/* Name des Partners */
+.chat-partner-name {
+  font-weight: 600;
+  color: #dbe4ff;
+  font-size: 1.1rem;
+}
+
+/* Chatbereich mit Scroll */
+.chat-box {
+  border: 1.5px solid rgba(120, 160, 255, 0.3);
+  border-radius: 0 0 10px 10px;
+  background: rgba(20, 25, 35, 0.6);
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
+  height: 500px; /* feste Höhe für Scroll */
 }
 
-/* 🔹 Nachrichten */
+/* Nachrichtenliste */
+.messages-list {
+  flex: 1;
+  overflow-y: auto; /* scrollen aktiv */
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+/* Chatblasen */
 .message {
   max-width: 75%;
   padding: 0.7rem 1rem;
-  margin: 0.4rem 0;
   border-radius: 12px;
   word-wrap: break-word;
-  display: inline-block;
 }
 
-/* Nachricht vom Benutzer (rechts) */
+/* Eigene Nachricht */
 .message.me {
   align-self: flex-end;
   background: linear-gradient(135deg, #3b82f6, #2563eb);
@@ -54,19 +107,19 @@
   border-bottom-right-radius: 2px;
 }
 
-/* Nachricht vom Partner (links) */
+/* Nachricht des Partners */
 .message.partner {
   align-self: flex-start;
   background: rgba(50, 70, 120, 0.6);
   border: 1.5px solid rgba(120, 160, 255, 0.4);
   color: #e3e8ff;
-  border-radius: 14px 14px 14px 4px;
+  border-radius: 12px;
   padding: 10px 14px;
   max-width: 65%;
   word-wrap: break-word;
 }
 
-/* 🔹 Eingabezeile */
+/* Eingabezeile + Button */
 .send-message-row {
   display: flex;
   align-items: center;
@@ -75,9 +128,9 @@
   background: rgba(255, 255, 255, 0.05);
   border-radius: 12px;
   padding: 0.6rem 0.8rem;
+  margin: 0.8rem;
 }
 
-/* Eingabefeld */
 .msg-input {
   flex: 1;
   padding: 0.7rem 1rem;
@@ -89,7 +142,6 @@
   line-height: 1.2;
 }
 
-/* Senden-Button */
 .send-btn {
   background: #3b82f6;
   color: white;
@@ -106,11 +158,41 @@
   background: #2563eb;
 }
 
-/* 🔹 Scrollbar styling */
+/* Scrollbar */
 .messages-list::-webkit-scrollbar {
   width: 6px;
 }
 .messages-list::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.2);
   border-radius: 6px;
+}
+
+/* Start-Chat Eingabebereich (vor Verbindung) */
+.start-chat {
+  display: flex;
+  gap: 0.6rem;
+  margin: 1rem;
+}
+
+.id-input {
+  flex: 1;
+  padding: 0.7rem 1rem;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text);
+}
+
+.connect-btn {
+  background: #3b82f6;
+  color: white;
+  border: none;
+  padding: 0.7rem 1.2rem;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.connect-btn:hover {
+  background: #2563eb;
 }
