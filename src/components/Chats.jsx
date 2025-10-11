@@ -3,6 +3,7 @@ import "./Chats.css";
 
 export default function Chats({ profile, setProfile }) {
   const [partnerId, setPartnerId] = useState("");
+  const [partnerName, setPartnerName] = useState(""); // 🔹 Name des Partners
   const [connected, setConnected] = useState(false);
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
@@ -19,36 +20,71 @@ export default function Chats({ profile, setProfile }) {
 
     peer.on("open", (id) => {
       setPeerId(id);
-      setProfile((prev) => ({ ...prev, id })); // <-- ID ins Profil schreiben
+      setProfile((prev) => ({ ...prev, id }));
     });
 
+    // 🔹 Eingehende Verbindung
     peer.on("connection", (conn) => {
       connRef.current = conn;
       setConnected(true);
+      setPartnerId(conn.peer);
+
+      conn.on("open", () => {
+        // Name vom Sender abfragen, falls er direkt geschickt wird
+        conn.send(JSON.stringify({ type: "intro", name: profile.name }));
+      });
+
       conn.on("data", (data) => {
-        setMessages((msgs) => [...msgs, { from: "partner", text: data }]);
+        try {
+          const msg = JSON.parse(data);
+          if (msg.type === "intro") {
+            setPartnerName(msg.name || conn.peer);
+          } else if (msg.type === "message") {
+            setMessages((msgs) => [...msgs, { from: "partner", text: msg.text }]);
+          }
+        } catch {
+          // Fallback für alte Textnachrichten
+          setMessages((msgs) => [...msgs, { from: "partner", text: data }]);
+        }
       });
     });
 
     return () => {
       peer.destroy();
     };
-  }, [setProfile]);
+  }, [setProfile, profile.name]);
 
   const connectToPeer = () => {
     if (!partnerId) return;
     const conn = peerRef.current.connect(partnerId);
     connRef.current = conn;
-    conn.on("open", () => setConnected(true));
-    conn.on("data", (data) => {
-      setMessages((msgs) => [...msgs, { from: "partner", text: data }]);
+
+    conn.on("open", () => {
+      setConnected(true);
+      // 🔹 Eigenen Namen an Partner senden
+      conn.send(JSON.stringify({ type: "intro", name: profile.name }));
     });
+
+    conn.on("data", (data) => {
+      try {
+        const msg = JSON.parse(data);
+        if (msg.type === "intro") {
+          setPartnerName(msg.name || partnerId);
+        } else if (msg.type === "message") {
+          setMessages((msgs) => [...msgs, { from: "partner", text: msg.text }]);
+        }
+      } catch {
+        setMessages((msgs) => [...msgs, { from: "partner", text: data }]);
+      }
+    });
+
     setMessages([]);
   };
 
   const sendMessage = () => {
     if (!input.trim() || !connRef.current) return;
-    connRef.current.send(input);
+    const msg = { type: "message", text: input };
+    connRef.current.send(JSON.stringify(msg));
     setMessages((msgs) => [...msgs, { from: "me", text: input }]);
     setInput("");
   };
@@ -87,7 +123,7 @@ export default function Chats({ profile, setProfile }) {
         </>
       ) : (
         <>
-          <h2>Chat</h2>
+          <h2>Chat mit {partnerName || partnerId}</h2>
           <div className="messages-list">
             {messages.map((msg, i) => (
               <div
