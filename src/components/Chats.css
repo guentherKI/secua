@@ -1,110 +1,101 @@
-@import "./SectionContainer.css";
-
-/* "Neuer Chat" ID Eingabe und Button */
-.start-chat {
-  display: flex;
-  gap: 0.7rem;
-  margin-bottom: 1.3rem;
-  width: 100%;
-}
-.id-input {
-  flex: 1 1 120px;
-  max-width: 160px;
-  min-width: 80px;
-  padding: 0.5rem 0.7rem;
-  font-size: 1rem;
-  border-radius: 8px 0 0 8px;
-  border: 1.5px solid var(--border);
-  background: var(--sidebar);
+.app-section-container {
+  width: 800px;
+  max-width: 95vw;
+  margin: 60px auto 0 auto;
+  background: var(--panel);
+  padding: 3rem 2.5rem 2.5rem 2.5rem;
+  border-radius: 18px;
+  box-shadow: var(--shadow);
   color: var(--text);
-}
-.connect-btn {
-  flex: 1 1 120px;
-  min-width: 120px;
-  max-width: 180px;
-  padding: 0.5rem 0.7rem;
-  font-size: 1rem;
-  border-radius: 0 8px 8px 0;
-  background: var(--primary);
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  transition: background 0.15s;
-  height: 60px;
-}
-.connect-btn:hover {
-  background: var(--primary-hover);
+  min-height: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
 }
 
-/* Peer-Chat Bereich */
-.peerchat-area {
-  margin-top: 1.2rem;
-  background: var(--sidebar);
-  border-radius: 10px;
-  padding: 1.2rem 1rem 0.7rem 1rem;
-  min-height: 160px;
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
-}
-.not-connected-hint {
-  color: #8fa7c5;
+.app-section-container h2 {
+  margin-top: 0;
+  margin-bottom: 1.7rem;
+  font-size: 2.1rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
   text-align: center;
-  font-size: 1.08rem;
-  margin-top: 1rem;
 }
+
+/* 🔹 Chatbereich (Nachrichten) */
 .messages-list {
-  flex: 1 1 80px;
-  max-height: 180px;
+  flex: 1;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 14px;
+  padding: 1rem;
   overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+  margin-bottom: 1.3rem;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.25);
 }
+
+/* 🔹 Nachrichten */
 .message {
-  padding: 0.5em 1em;
-  border-radius: 8px;
-  max-width: 80%;
-  word-break: break-word;
-  font-size: 1.13rem;
-  margin-bottom: 0.1em;
+  max-width: 75%;
+  padding: 0.7rem 1rem;
+  margin: 0.4rem 0;
+  border-radius: 12px;
+  word-wrap: break-word;
 }
+
 .message.me {
   align-self: flex-end;
-  background: var(--primary);
-  color: #fff;
-}
-.message.partner {
-  align-self: flex-start;
-  background: #2d3e5c;
-  color: var(--text);
+  background: #3b82f6;
+  color: white;
 }
 
+.message.partner {
+  align-self: flex-start;
+  background: #2f3748;
+  color: #dce4f0;
+}
+
+/* 🔹 Eingabezeile */
 .send-message-row {
   display: flex;
-  gap: 0.5rem;
-  margin-top: 0.5rem;
+  align-items: center;
+  gap: 0.7rem;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 0.6rem 0.8rem;
 }
+
 .msg-input {
-  flex: 1 1 120px;
-  min-width: 80px;
-  padding: 0.6rem;
-  border-radius: 7px;
-  border: 1.5px solid var(--border);
-  background: var(--panel);
-  color: var(--text);
-  font-size: 1.12rem;
-}
-.send-btn {
-  padding: 0.6rem 1.6rem;
-  background: var(--primary);
-  color: #fff;
+  flex: 1;
+  padding: 0.6rem 0.9rem;
+  background: transparent;
   border: none;
-  border-radius: 7px;
-  cursor: pointer;
-  font-size: 1.12rem;
-  transition: background 0.15s;
+  outline: none;
+  color: var(--text);
+  font-size: 1rem;
 }
+
+.send-btn {
+  background: #3b82f6;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
 .send-btn:hover {
-  background: var(--primary-hover);
+  background: #2563eb;
+}
+
+/* 🔹 Scrollbar styling */
+.messages-list::-webkit-scrollbar {
+  width: 6px;
+}
+.messages-list::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
 }
