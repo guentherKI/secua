@@ -4,13 +4,14 @@ import "./Chats.css";
 export default function Chats({ profile, setProfile }) {
   const [partnerId, setPartnerId] = useState("");
   const [partnerName, setPartnerName] = useState("");
-  const [partnerAvatar, setPartnerAvatar] = useState(""); // optional, URL oder Buchstabe
+  const [partnerAvatar, setPartnerAvatar] = useState(""); // optional URL oder Buchstabe
   const [connected, setConnected] = useState(false);
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [peerId, setPeerId] = useState("");
   const peerRef = useRef(null);
   const connRef = useRef(null);
+  const messagesEndRef = useRef(null);
 
   useEffect(() => {
     const shortId = Math.random().toString(36).substring(2, 8).toUpperCase();
@@ -49,6 +50,11 @@ export default function Chats({ profile, setProfile }) {
       peer.destroy();
     };
   }, [setProfile, profile.name]);
+
+  // Scrollt automatisch nach unten, wenn neue Nachricht kommt
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   const connectToPeer = () => {
     if (!partnerId) return;
@@ -139,6 +145,7 @@ export default function Chats({ profile, setProfile }) {
                   <span>{msg.text}</span>
                 </div>
               ))}
+              <div ref={messagesEndRef} />
             </div>
 
             {/* Eingabezeile */}
