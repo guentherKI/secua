@@ -11,8 +11,9 @@ export default function Chats({ profile, setProfile }) {
   const [peerId, setPeerId] = useState("");
   const peerRef = useRef(null);
   const connRef = useRef(null);
-  const messagesEndRef = useRef(null);
+  const messagesListRef = useRef(null);
 
+  // Peer initialisieren
   useEffect(() => {
     const shortId = Math.random().toString(36).substring(2, 8).toUpperCase();
     const peer = new Peer(shortId, { debug: 2 });
@@ -51,11 +52,15 @@ export default function Chats({ profile, setProfile }) {
     };
   }, [setProfile, profile.name]);
 
-  // Scrollt automatisch nach unten, wenn neue Nachricht kommt
+  // Automatisches Scrollen im Chatbereich
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (messagesListRef.current) {
+      const container = messagesListRef.current;
+      container.scrollTop = container.scrollHeight;
+    }
   }, [messages]);
 
+  // Verbindung zu Peer aufbauen
   const connectToPeer = () => {
     if (!partnerId) return;
     const conn = peerRef.current.connect(partnerId);
@@ -82,6 +87,7 @@ export default function Chats({ profile, setProfile }) {
     setMessages([]);
   };
 
+  // Nachricht senden
   const sendMessage = () => {
     if (!input.trim() || !connRef.current) return;
     const msg = { type: "message", text: input };
@@ -91,7 +97,7 @@ export default function Chats({ profile, setProfile }) {
   };
 
   return (
-    <div className="app-section-container chat-container">
+    <div className="app-section-container">
       {!connected ? (
         <>
           <h2>Neuer Chat</h2>
@@ -122,11 +128,7 @@ export default function Chats({ profile, setProfile }) {
           <div className="chat-top-bar">
             <div className="partner-info">
               <div className="partner-avatar">
-                {partnerAvatar ? (
-                  <img src={partnerAvatar} alt="Partner" />
-                ) : (
-                  <span>{partnerId?.[0]}</span>
-                )}
+                {partnerAvatar ? <img src={partnerAvatar} alt="Partner" /> : <span>{partnerId?.[0]}</span>}
               </div>
               <span className="chat-partner-name">
                 {partnerName || partnerId || "Partner"}
@@ -136,16 +138,12 @@ export default function Chats({ profile, setProfile }) {
 
           {/* Chatbereich */}
           <div className="chat-box">
-            <div className="messages-list">
+            <div className="messages-list" ref={messagesListRef}>
               {messages.map((msg, i) => (
-                <div
-                  key={i}
-                  className={msg.from === "me" ? "message me" : "message partner"}
-                >
+                <div key={i} className={msg.from === "me" ? "message me" : "message partner"}>
                   <span>{msg.text}</span>
                 </div>
               ))}
-              <div ref={messagesEndRef} />
             </div>
 
             {/* Eingabezeile */}
