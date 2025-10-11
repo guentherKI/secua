@@ -57,9 +57,13 @@
 /* Nachricht vom Partner (links) */
 .message.partner {
   align-self: flex-start;
-  background: #2f3748;
-  color: #dce4f0;
-  border-bottom-left-radius: 2px;
+  background: rgba(50, 70, 120, 0.6);
+  border: 1.5px solid rgba(120, 160, 255, 0.4);
+  color: #e3e8ff;
+  border-radius: 14px 14px 14px 4px;
+  padding: 10px 14px;
+  max-width: 65%;
+  word-wrap: break-word;
 }
 
 /* 🔹 Eingabezeile */
